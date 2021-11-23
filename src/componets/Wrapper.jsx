@@ -12,7 +12,7 @@ const Wrapper = (props) => {
         (
             async () => {
                 try {
-                    const {data} = await axios.get('user');
+                    await axios.get('user');
                 } catch(e) {
                     setRedirect(true)
                 }
@@ -29,7 +29,7 @@ const Wrapper = (props) => {
             <Nav />
             <div className="container-fluid">
                 <div className="row">
-                <Menu />
+                    <Menu />
                 <main className="col-md-9 ms-sm-auto col-lg-10 px-md-4">
                     {props.children}
                 </main>
