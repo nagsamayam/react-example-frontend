@@ -2,8 +2,8 @@ import { Route, Routes } from 'react-router';
 import './App.css';
 import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
-import Users from './pages/Users';
 import Login from './pages/Login';
+import Users from './pages/users/Users';
 
 function App() {
   return (
