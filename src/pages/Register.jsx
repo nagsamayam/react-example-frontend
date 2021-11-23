@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { useState } from 'react';
 import '../Login.css';
+import { useNavigate } from "react-router-dom"
 
 const Register = () => {
     const [firstName, setFirstName] = useState('');
@@ -8,11 +9,12 @@ const Register = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [passwordConfirm, setPasswordConfirm] = useState('');
+    const navigate = useNavigate()
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const response = await axios.post('http://api.antoniopapa-laravel-admin.test/api/register', {
+        await axios.post('register', {
             first_name: firstName,
             last_name: lastName,
             email: email,
@@ -21,14 +23,14 @@ const Register = () => {
             role_id: 4
         });
 
-        console.log(response.data);
+       navigate("/login");        
     }
 
     return(
-        <>
+        <>  
             <main className="form-signin">
                 <form onSubmit={handleSubmit}>
-                    <h1 className="h3 mb-3 fw-normal">Please sign in</h1>
+                    <h1 className="h3 mb-3 fw-normal">Please sign up</h1>
                     
                         <input type="text" className="form-control" placeholder="First Name" 
                             onChange={(e) => setFirstName(e.target.value)}
