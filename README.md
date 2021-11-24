@@ -13,7 +13,7 @@
 
 > Note: Currently, for this example, we recommend using `localhost` during local development to avoid "Same-Origin" issues.
 
-Corresponding frontend: https://github.com/nagsamayam/react-example-backend
+Corresponding backend: https://github.com/nagsamayam/react-example-backend
 
 ### `yarn start`
 
