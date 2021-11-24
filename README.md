@@ -5,17 +5,9 @@
   * NPM >= 6.11
   * Yarn (Recommended)
 
-### Installation ###
-
-```bash
-$ git clone https://github.com/nagsamayam/react-example-frontend.git <projectname>
-$ cd <projectname>
-$ yarn
-```
-
 ### Installation
 
--   Clone the repo `git clone https://github.com/nagsamayam/react-example-backend.git <projectname>`
+-   Clone the repo `git clone https://github.com/nagsamayam/react-example-frontend.git <projectname>`
 -   `cd <projectname>`
 -   `yarn`
 
