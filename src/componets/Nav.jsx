@@ -28,7 +28,7 @@ const Nav = () => {
                 Company Name                
             </a>
             <ul className="my-2 my-md-0 mr-md-3">
-                <Link to="/" className="p-2 text-white text-decoration-none">
+                <Link to="/profile" className="p-2 text-white text-decoration-none">
                     {user.first_name + ' ' + user.last_name}
                 </Link>
                 <Link to={'/login'} className="p-2 text-white" onClick={logout}>Signout</Link>

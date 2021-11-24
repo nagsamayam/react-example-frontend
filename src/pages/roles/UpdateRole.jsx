@@ -61,7 +61,7 @@ const UpdateRole = () => {
                                 <div key={permission.id} className="form-check form-check-inline col-3">
                                     <input type="checkbox" className="form-check-input" 
                                         value={permission.id}
-                                        checked={permissionIds.some(s => s == permission.id)}
+                                        checked={permissionIds.some(s => s === permission.id)}
                                         onChange={() => check(permission.id)}
                                     />
                                     <label className="form-check-lable">{permission.name}</label>
