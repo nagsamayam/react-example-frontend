@@ -13,6 +13,7 @@ import UpdateRole from './pages/roles/UpdateRole';
 import Products from './pages/products/Products';
 import CreateProduct from './pages/products/CreateProduct';
 import UpdateProduct from './pages/products/UpdateProduct';
+import Orders from './pages/orders/Orders';
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
         <Route path="/products" element={<Products />}></Route>
         <Route path="/products/create" element={<CreateProduct />}></Route>
         <Route path="/products/:id/edit" element={<UpdateProduct />}></Route>
+        <Route path="/orders" element={<Orders />}></Route>
         <Route path="*" element={<NotFound />}></Route>
       </Routes>
     </div>
