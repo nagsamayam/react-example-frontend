@@ -2,9 +2,11 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Wrapper from "../componets/Wrapper";
+import {connect} from 'react-redux'
+import { setUser } from "../redux/user/actions/setUserAction";
 
 
-const Profile = () => {
+const Profile = (props) => {
 
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
@@ -14,34 +16,31 @@ const Profile = () => {
     const [passwordConfirm, setPasswordConfirm] = useState('');
     const [roleId, setRoleId] = useState('');
 
-    const [roles, setRoles] = useState([]);
-
     const navigate = useNavigate();
 
     useEffect(() => {
-        (
-            async () => {
-                const rolesRes = await axios.get('roles');
-                setRoles(rolesRes.data.data);
-
-                const { data } = await axios.get(`user`);
-                setFirstName(data.first_name);
-                setLastName(data.last_name);
-                setEmail(data.email);
-                setRoleId(data.roles[0].id)
-            }
-        )()
-    },[])
+                setFirstName(props.firstName);
+                setLastName(props.lastName);
+                setEmail(props.email);
+                setRoleId(props.roleId)
+    },[props])
 
     const handleProfileSubmit = async (e) => {
         e.preventDefault();
 
-        await axios.put(`user/profile`, {
+        const {data} = await axios.put(`user/profile`, {
             first_name: firstName,
             last_name: lastName,
             email,
             role_id: roleId,
         });
+
+        props.setUser({
+            firstName: data.first_name,
+            lastName: data.last_name,
+            email: data.email,
+            roleId: data.roles[0].id
+        })
 
         navigate('/')
     }
@@ -114,4 +113,21 @@ const Profile = () => {
     )
 }
 
-export default Profile;
+const mapStateToProps = (state) => {
+    return {
+        firstName: state.firstName,
+        lastName: state.lastName,
+        email: state.email,
+        roleId: state.roleId,
+    }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        setUser: (user) => {
+            dispatch(setUser(user))
+        }
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Profile)

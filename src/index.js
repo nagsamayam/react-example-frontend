@@ -5,6 +5,8 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from "react-router-dom";
 import axios from 'axios';
+import { Provider } from 'react-redux';
+import store from './redux/user/store';
 
 axios.defaults.baseURL = 'http://localhost:8000/api/';
 axios.defaults.withCredentials = true;
@@ -12,7 +14,9 @@ axios.defaults.withCredentials = true;
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
-    < App />
+      <Provider store={store}>
+        < App />
+      </Provider>
     </BrowserRouter>
   </React.StrictMode>,
   document.getElementById('root')
