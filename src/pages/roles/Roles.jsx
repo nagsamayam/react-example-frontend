@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import Paginator from "../../componets/Paginator";
 import Wrapper from "../../componets/Wrapper";
 
 const Roles = () => {
@@ -18,18 +19,6 @@ const Roles = () => {
         )()
 
     },[page])
-
-    const next = () => {
-        if(page < lastPage) {
-            setPage(page + 1)
-        }
-    }
-
-    const prev = () => {
-        if(page >= 1) {
-            setPage(page - 1)
-        }
-    }
 
     const del = async (id) => {
         if(window.confirm('Are you sure want to delete this role?')) {
@@ -78,18 +67,11 @@ const Roles = () => {
                 </table>
             </div>
 
-            <nav>
-                <ul className="pagination">
-                    <li className="page-item">
-                        <a href="#" className="page-link" onClick={prev}>Previous</a>
-                    </li>
-                    <li className="page-item">
-                        <a href="#" className="page-link"
-                            onClick={next}
-                        >Next</a>
-                    </li>
-                </ul>
-            </nav>
+            <Paginator
+                page={page} 
+                lastPage={lastPage} 
+                pageChanged={(page) => setPage(page)} 
+            />
         </Wrapper>
     )
 }
