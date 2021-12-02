@@ -1,54 +1,130 @@
 import axios from 'axios';
-import { useState } from 'react';
 import '../Login.css';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
 import { useNavigate } from "react-router-dom"
+import {UserRegistrationSchema} from '../validationSchemas/user.registration.schema'
+import { useState } from 'react';
+
 
 const Register = () => {
-    const [firstName, setFirstName] = useState('');
-    const [lastName, setLastName] = useState('');
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [passwordConfirm, setPasswordConfirm] = useState('');
-    const navigate = useNavigate()
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
+    const [loading, setLoading] = useState(false);
+    const navigate = useNavigate();   
 
-        await axios.post('register', {
-            first_name: firstName,
-            last_name: lastName,
-            email: email,
-            password: password,
-            password_confirmation: passwordConfirm,
-            role_id: 4
-        });
+    const formOptions = { resolver: yupResolver(UserRegistrationSchema) };
 
-       navigate("/login");        
+    const { register, handleSubmit, setError, formState } = useForm(formOptions);
+
+    const { errors } = formState;
+
+    const onSubmit =  async (formData) => {  
+            setLoading(true);
+
+            await axios.post('register', {
+                first_name: formData.firstName,
+                last_name: formData.lastName,
+                email: formData.email,
+                password: formData.password,
+                password_confirmation: formData.passwordConfirmation,
+                role_id: 4
+            }).then((response) => {
+                navigate("/login"); 
+            }).catch((error) => {
+                setLoading(false);
+                const errResponse = error.response;               
+                
+                if(errResponse.status === 422) {
+                    for (let [field, messages] of Object.entries(errResponse.data.errors)) {
+                        setError(field, { type: 'server', message: messages[0] });
+                    }
+                }
+            });
     }
 
     return(
         <>  
             <main className="form-signin">
-                <form onSubmit={handleSubmit}>
-                    <h1 className="h3 mb-3 fw-normal">Please sign up</h1>
-                    
-                        <input type="text" className="form-control" placeholder="First Name" 
-                            onChange={(e) => setFirstName(e.target.value)}
+                <form onSubmit={handleSubmit(onSubmit)}>
+                    <div className="form-group mb-3">
+                        <label>First Name</label>
+                        <input
+                            name="firstName"
+                            type="text"
+                            {...register('firstName')}
+                            className={`form-control ${errors.firstName ? 'is-invalid' : ''}`}
                         />
-                        <input type="text" className="form-control" placeholder="Last Name" 
-                            onChange={(e) => setLastName(e.target.value)}
-                        />
-                        <input type="email" className="form-control" placeholder="Email" 
-                            onChange={(e) => setEmail(e.target.value)}
-                        />                        
-                        <input type="password" className="form-control" placeholder="Password" 
-                            onChange={(e) => setPassword(e.target.value)}
-                        />
-                        <input type="password" className="form-control" placeholder="Password confirm" 
-                            onChange={(e) => setPasswordConfirm(e.target.value)}
-                        />                        
+                        <div className="invalid-feedback">{errors.firstName?.message}</div>
+                    </div>
 
-                    <button type="submit" className="w-100 btn btn-lg btn-primary" >Sign in</button>
+                    <div className="form-group mb-3">
+                        <label>Last Name</label>
+                        <input
+                            name="lastName"
+                            type="text"
+                            {...register('lastName')}
+                            className={`form-control ${errors.lastName ? 'is-invalid' : ''}`}
+                        />
+                        <div className="invalid-feedback">{errors.lastName?.message}</div>
+                    </div>
+
+                    <div className="form-group mb-3">
+                        <label>Email</label>
+                        <input
+                            name="email"
+                            type="text"
+                            {...register('email')}
+                            className={`form-control ${errors.email ? 'is-invalid' : ''}`}
+                        />
+                        <div className="invalid-feedback">{errors.email?.message}</div>
+                    </div>
+
+                    <div className="form-group mb-3">
+                        <label>Password</label>
+                        <input
+                            name="password"
+                            type="password"
+                            {...register('password')}
+                            className={`form-control ${errors.password ? 'is-invalid' : ''}`}
+                        />
+                        <div className="invalid-feedback">{errors.password?.message}</div>
+                    </div>
+                    
+                    <div className="form-group mb-3">
+                        <label>Confirm Password</label>
+                        <input
+                            name="passwordConfirmation"
+                            type="password"
+                            {...register('passwordConfirmation')}
+                            className={`form-control ${
+                            errors.passwordConfirmation ? 'is-invalid' : ''
+                            }`}
+                        />
+                        <div className="invalid-feedback">
+                            {errors.passwordConfirmation?.message}
+                        </div>
+                    </div>
+
+                    <div className="form-group form-check mb-3">
+                        <input
+                            name="acceptTerms"
+                            type="checkbox"
+                            {...register('acceptTerms')}
+                            className={`form-check-input ${
+                            errors.acceptTerms ? 'is-invalid' : ''
+                            }`}
+                        />
+                        <label htmlFor="acceptTerms" className="form-check-label">
+                            I have read and agree to the Terms
+                        </label>
+                        <div className="invalid-feedback">{errors.acceptTerms?.message}</div>
+                    </div>
+
+                    <div className="form-group mb-3">
+                        <button type="submit" disabled={loading} className="btn btn-primary">
+                            {loading ? 'Submitting...' : 'Register'}
+                        </button>
+                    </div>
                 </form>
             </main>
         </>
