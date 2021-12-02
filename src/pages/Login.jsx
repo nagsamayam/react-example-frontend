@@ -33,7 +33,6 @@ const Login = () => {
                     }
                 }
         })
-
     }
 
     return(
@@ -68,7 +67,7 @@ const Login = () => {
 
                     <div className="form-group mb-3">
                         <button type="submit" disabled={loading} className="btn btn-primary">
-                            {loading ? 'Submitting...' : 'Sigin'}
+                            {loading ? 'Submitting...' : 'Signin'}
                         </button>
                         </div>
                 </form>

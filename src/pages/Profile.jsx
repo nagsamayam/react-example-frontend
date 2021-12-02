@@ -107,8 +107,6 @@ const Profile = (props) => {
                 </div>
                 <button className="btn btn-outline-secondary">Save</button>
             </form>
-
-
         </Wrapper>
     )
 }
