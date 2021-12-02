@@ -5,7 +5,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useNavigate } from "react-router-dom"
 import {UserRegistrationSchema} from '../validationSchemas/user.registration.schema'
 import { useState } from 'react';
-
+import { ValidationMessage } from '../componets/validation-message';
 
 const Register = () => {
 
@@ -54,7 +54,7 @@ const Register = () => {
                             {...register('firstName')}
                             className={`form-control ${errors.firstName ? 'is-invalid' : ''}`}
                         />
-                        <div className="invalid-feedback">{errors.firstName?.message}</div>
+                        <ValidationMessage field={errors.firstName} />
                     </div>
 
                     <div className="form-group mb-3">
@@ -65,7 +65,7 @@ const Register = () => {
                             {...register('lastName')}
                             className={`form-control ${errors.lastName ? 'is-invalid' : ''}`}
                         />
-                        <div className="invalid-feedback">{errors.lastName?.message}</div>
+                        <ValidationMessage field={errors.lastName} />
                     </div>
 
                     <div className="form-group mb-3">
@@ -76,7 +76,7 @@ const Register = () => {
                             {...register('email')}
                             className={`form-control ${errors.email ? 'is-invalid' : ''}`}
                         />
-                        <div className="invalid-feedback">{errors.email?.message}</div>
+                        <ValidationMessage field={errors.email} />
                     </div>
 
                     <div className="form-group mb-3">
@@ -87,7 +87,7 @@ const Register = () => {
                             {...register('password')}
                             className={`form-control ${errors.password ? 'is-invalid' : ''}`}
                         />
-                        <div className="invalid-feedback">{errors.password?.message}</div>
+                        <ValidationMessage field={errors.password} />                        
                     </div>
                     
                     <div className="form-group mb-3">
@@ -100,9 +100,7 @@ const Register = () => {
                             errors.passwordConfirmation ? 'is-invalid' : ''
                             }`}
                         />
-                        <div className="invalid-feedback">
-                            {errors.passwordConfirmation?.message}
-                        </div>
+                        <ValidationMessage field={errors.passwordConfirmation} />
                     </div>
 
                     <div className="form-group form-check mb-3">
@@ -117,7 +115,7 @@ const Register = () => {
                         <label htmlFor="acceptTerms" className="form-check-label">
                             I have read and agree to the Terms
                         </label>
-                        <div className="invalid-feedback">{errors.acceptTerms?.message}</div>
+                        <ValidationMessage field={errors.acceptTerms} />
                     </div>
 
                     <div className="form-group mb-3">
